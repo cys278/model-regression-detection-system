@@ -1,13 +1,21 @@
 import json
-from openai import OpenAI
+
+from dotenv import load_dotenv
+from groq import Groq
 
 from src.schemas import PromptConfig, ClassifierOutput
 
 
-client = OpenAI()
+load_dotenv()
+
+client = Groq()
 
 
-def classify_email(email_text: str, prompt_config: PromptConfig, model: str = "gpt-4o-mini") -> ClassifierOutput:
+def classify_email(
+    email_text: str,
+    prompt_config: PromptConfig,
+    model: str = "llama-3.1-8b-instant",
+) -> ClassifierOutput:
     response = client.chat.completions.create(
         model=model,
         messages=[
