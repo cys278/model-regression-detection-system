@@ -1,0 +1,503 @@
+[
+  {
+    "id": "case_001",
+    "input": "I was charged twice for my subscription this month. Please refund the extra charge.",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer was charged twice and is requesting a refund."
+    },
+    "difficulty": "easy",
+    "notes": "Clear billing issue"
+  },
+  {
+    "id": "case_002",
+    "input": "My app keeps crashing every time I try to upload a file.",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer experiences crashes when uploading files."
+    },
+    "difficulty": "easy",
+    "notes": "Clear technical issue"
+  },
+  {
+    "id": "case_003",
+    "input": "I can't log into my account even after resetting my password.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot access their account after password reset."
+    },
+    "difficulty": "easy",
+    "notes": "Clear account issue"
+  },
+  {
+    "id": "case_004",
+    "input": "Can you tell me more about your pricing plans?",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer is asking about pricing plans."
+    },
+    "difficulty": "easy",
+    "notes": "General inquiry"
+  },
+  {
+    "id": "case_005",
+    "input": "I was billed but also can't log in anymore.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer was billed and cannot access their account."
+    },
+    "difficulty": "medium",
+    "notes": "Ambiguous billing + account"
+  },
+  {
+    "id": "case_006",
+    "input": "App crashes when I open settings.",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer experiences app crash when opening settings."
+    },
+    "difficulty": "easy",
+    "notes": "Short technical issue"
+  },
+  {
+    "id": "case_007",
+    "input": "charged me twice???",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer reports being charged twice."
+    },
+    "difficulty": "medium",
+    "notes": "Short and informal"
+  },
+  {
+    "id": "case_008",
+    "input": "cant login",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot log into their account."
+    },
+    "difficulty": "medium",
+    "notes": "Very short input"
+  },
+  {
+    "id": "case_009",
+    "input": "I cnt logn to my accnt after reset.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot log into their account after reset."
+    },
+    "difficulty": "hard",
+    "notes": "Typos"
+  },
+  {
+    "id": "case_010",
+    "input": "So nice to be charged twice 🙂",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer sarcastically reports being charged twice."
+    },
+    "difficulty": "hard",
+    "notes": "Sarcasm"
+  },
+  {
+    "id": "case_011",
+    "input": "After paying, my premium features are still locked.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer paid but cannot access premium features."
+    },
+    "difficulty": "medium",
+    "notes": "Billing vs account ambiguity"
+  },
+  {
+    "id": "case_012",
+    "input": "The website doesn't load at all.",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer cannot load the website."
+    },
+    "difficulty": "easy",
+    "notes": "Technical issue"
+  },
+  {
+    "id": "case_013",
+    "input": "Do you offer discounts for students?",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer is asking about student discounts."
+    },
+    "difficulty": "easy",
+    "notes": "General inquiry"
+  },
+  {
+    "id": "case_014",
+    "input": "Hi, ami login korte partesi na after password reset.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot log into their account after resetting password."
+    },
+    "difficulty": "hard",
+    "notes": "Mixed language"
+  },
+  {
+    "id": "case_015",
+    "input": "Payment went through but app crashes every time.",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports payment succeeded but app crashes."
+    },
+    "difficulty": "hard",
+    "notes": "Multi-intent"
+  },
+  {
+    "id": "case_016",
+    "input": "Why am I being billed every month?",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer questions recurring charges."
+    },
+    "difficulty": "easy",
+    "notes": "Billing question"
+  },
+  {
+    "id": "case_017",
+    "input": "I forgot my password and cannot access my account.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot access account due to forgotten password."
+    },
+    "difficulty": "easy",
+    "notes": "Account issue"
+  },
+  {
+    "id": "case_018",
+    "input": "App freezes when I try to submit the form.",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer experiences app freeze during form submission."
+    },
+    "difficulty": "easy",
+    "notes": "Technical issue"
+  },
+  {
+    "id": "case_019",
+    "input": "Hello, just wanted to say great service!",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer provides positive feedback."
+    },
+    "difficulty": "easy",
+    "notes": "Non-issue message"
+  },
+  {
+    "id": "case_020",
+    "input": "I think something is wrong but not sure what exactly.",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer reports a vague issue without specifics."
+    },
+    "difficulty": "medium",
+    "notes": "Ambiguous"
+  },
+
+  {
+    "id": "case_021",
+    "input": "Why did you charge me again this month?",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer questions a repeated monthly charge."
+    },
+    "difficulty": "easy",
+    "notes": "Billing variation"
+  },
+  {
+    "id": "case_022",
+    "input": "Still can't login after trying everything.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot log into their account after multiple attempts."
+    },
+    "difficulty": "easy",
+    "notes": "Reworded login issue"
+  },
+  {
+    "id": "case_023",
+    "input": "App keeps freezing on startup.",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer experiences app freezing during startup."
+    },
+    "difficulty": "easy",
+    "notes": "Technical variation"
+  },
+  {
+    "id": "case_024",
+    "input": "Do you have yearly plans?",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer is asking about yearly subscription plans."
+    },
+    "difficulty": "easy",
+    "notes": "General question"
+  },
+  {
+    "id": "case_025",
+    "input": "charged twice and now app doesnt open",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports being charged twice and app not opening."
+    },
+    "difficulty": "hard",
+    "notes": "Billing + technical ambiguity"
+  },
+  {
+    "id": "case_026",
+    "input": "login not working!!!",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot log into their account."
+    },
+    "difficulty": "medium",
+    "notes": "Emotional + short"
+  },
+  {
+    "id": "case_027",
+    "input": "why charge me 2 times???",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer reports being charged twice."
+    },
+    "difficulty": "medium",
+    "notes": "Casual + typo style"
+  },
+  {
+    "id": "case_028",
+    "input": "site not loading",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports the website is not loading."
+    },
+    "difficulty": "medium",
+    "notes": "Short technical"
+  },
+  {
+    "id": "case_029",
+    "input": "I paid but can't use premium features.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer paid but cannot access premium features."
+    },
+    "difficulty": "medium",
+    "notes": "Billing vs account"
+  },
+  {
+    "id": "case_030",
+    "input": "Thanks for the help earlier!",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer expresses gratitude."
+    },
+    "difficulty": "easy",
+    "notes": "Positive message"
+  },
+  {
+    "id": "case_031",
+    "input": "app crash when upload file again",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports app crash during file upload."
+    },
+    "difficulty": "medium",
+    "notes": "Broken grammar"
+  },
+  {
+    "id": "case_032",
+    "input": "cant access accnt after reset",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot access account after reset."
+    },
+    "difficulty": "hard",
+    "notes": "Heavy typos"
+  },
+  {
+    "id": "case_033",
+    "input": "Billing looks wrong but also login issues.",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer reports billing concerns and login issues."
+    },
+    "difficulty": "hard",
+    "notes": "Multi-intent"
+  },
+  {
+    "id": "case_034",
+    "input": "Why am I paying for something I can't use?",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer is paying but cannot use the service."
+    },
+    "difficulty": "medium",
+    "notes": "Implicit issue"
+  },
+  {
+    "id": "case_035",
+    "input": "hello just checking if everything is okay",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer is making a general inquiry."
+    },
+    "difficulty": "easy",
+    "notes": "Neutral message"
+  },
+  {
+    "id": "case_036",
+    "input": "this app is so slow and keeps crashing",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports slow performance and crashes."
+    },
+    "difficulty": "medium",
+    "notes": "Performance + crash"
+  },
+  {
+    "id": "case_037",
+    "input": "refund me now this is ridiculous",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer demands a refund."
+    },
+    "difficulty": "medium",
+    "notes": "Emotional billing"
+  },
+  {
+    "id": "case_038",
+    "input": "I think I forgot password and now locked out",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer is locked out due to forgotten password."
+    },
+    "difficulty": "easy",
+    "notes": "Account issue"
+  },
+  {
+    "id": "case_039",
+    "input": "ami taka diyechi kintu feature use korte partesi na",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer paid but cannot use features."
+    },
+    "difficulty": "hard",
+    "notes": "Mixed Bangla-English"
+  },
+  {
+    "id": "case_040",
+    "input": "why subscription renew automatically??",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer questions automatic subscription renewal."
+    },
+    "difficulty": "medium",
+    "notes": "Billing confusion"
+  },
+  {
+    "id": "case_041",
+    "input": "error when I try to save settings",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer encounters error while saving settings."
+    },
+    "difficulty": "easy",
+    "notes": "Technical issue"
+  },
+  {
+    "id": "case_042",
+    "input": "I don't understand your pricing",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer is confused about pricing."
+    },
+    "difficulty": "easy",
+    "notes": "General inquiry"
+  },
+  {
+    "id": "case_043",
+    "input": "charged but cant login nice 🙂",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer sarcastically reports being charged and unable to log in."
+    },
+    "difficulty": "hard",
+    "notes": "Sarcasm + multi-intent"
+  },
+  {
+    "id": "case_044",
+    "input": "why my account gone??",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer cannot access or find their account."
+    },
+    "difficulty": "medium",
+    "notes": "Broken grammar"
+  },
+  {
+    "id": "case_045",
+    "input": "payment failed but money deducted",
+    "expected_output": {
+      "category": "billing",
+      "summary": "Customer reports failed payment but money was deducted."
+    },
+    "difficulty": "medium",
+    "notes": "Edge billing case"
+  },
+  {
+    "id": "case_046",
+    "input": "everything just stops working randomly",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports random system failures."
+    },
+    "difficulty": "medium",
+    "notes": "Vague technical"
+  },
+  {
+    "id": "case_047",
+    "input": "Hi, need help with something not sure what exactly",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer requests help without specifying the issue."
+    },
+    "difficulty": "medium",
+    "notes": "Vague inquiry"
+  },
+  {
+    "id": "case_048",
+    "input": "account locked for no reason",
+    "expected_output": {
+      "category": "account",
+      "summary": "Customer reports their account is locked."
+    },
+    "difficulty": "easy",
+    "notes": "Account issue"
+  },
+  {
+    "id": "case_049",
+    "input": "I was billed and then app crashed right after",
+    "expected_output": {
+      "category": "technical",
+      "summary": "Customer reports billing followed by app crash."
+    },
+    "difficulty": "hard",
+    "notes": "Multi-intent"
+  },
+  {
+    "id": "case_050",
+    "input": "just wondering how this works",
+    "expected_output": {
+      "category": "general",
+      "summary": "Customer is asking how the service works."
+    },
+    "difficulty": "easy",
+    "notes": "General inquiry"
+  }
+]
