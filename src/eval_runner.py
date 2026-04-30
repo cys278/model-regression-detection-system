@@ -25,9 +25,39 @@ def run_evaluation() -> None:
         result = evaluate_case(case, PROMPT_PATH)
         results.append(result)
 
+    # -----------------------
+    # METRICS
+    # -----------------------
     total_cases = len(results)
     correct_cases = sum(1 for result in results if result.category_match)
     category_accuracy = correct_cases / total_cases
+
+    summary_scores = [
+        result.summary_score for result in results
+        if result.summary_score is not None
+    ]
+
+    average_summary_score = (
+        sum(summary_scores) / len(summary_scores)
+        if summary_scores else 0
+    )
+    
+    # -----------------------
+    # COMBINED QUALITY SCORE
+    # -----------------------
+    combined_scores = []
+
+    for result in results:
+        category_score = 1 if result.category_match else 0
+        summary_score = (result.summary_score or 1) / 5
+
+        combined = 0.7 * category_score + 0.3 * summary_score
+        combined_scores.append(combined)
+
+    overall_quality = (
+        sum(combined_scores) / len(combined_scores)
+        if combined_scores else 0
+    )
 
     current_run = EvalRun(
         run_id=f"eval_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid4().hex[:8]}",
@@ -41,13 +71,20 @@ def run_evaluation() -> None:
 
     saved_path = save_eval_run(current_run)
 
+    # -----------------------
+    # PRINT OUTPUT
+    # -----------------------
     print("\nEvaluation complete.")
     print(f"Saved run: {saved_path}")
     print(f"Category accuracy: {category_accuracy:.2%}")
-    
+    print(f"Average summary score: {average_summary_score:.2f}/5")
+    print(f"Overall quality score: {overall_quality:.2f}")
+    # -----------------------
+
+    # FAILED CASES
     failed_cases = [
-    result for result in results
-    if not result.category_match
+        result for result in results
+        if not result.category_match
     ]
 
     print("\nFailed cases:")
@@ -60,6 +97,7 @@ def run_evaluation() -> None:
         print(f"Expected summary: {result.expected_summary}")
         print(f"Predicted summary: {result.predicted_summary}")
 
+    # COMPARISON
     if previous_run:
         comparison = compare_runs(previous_run, current_run)
 

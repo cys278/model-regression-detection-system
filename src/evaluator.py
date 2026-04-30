@@ -6,6 +6,7 @@ from src.classifier import classify_email
 from src.eval_schemas import GoldenCase, CaseEvalResult
 from src.prompt_loader import load_prompt_config
 from src.eval_schemas import ModelOutput
+from src.summary_judge import judge_summary
 
 
 
@@ -40,7 +41,10 @@ def evaluate_case(case: GoldenCase, prompt_path: str) -> CaseEvalResult:
         expected_summary=case.expected_output.summary,
         predicted_summary=output.summary,
         category_match=output.category == case.expected_output.category,
-        summary_score=None,
+        summary_score=judge_summary(
+            case.expected_output.summary,
+            output.summary,
+        ),
         latency_ms=round(latency_ms, 2),
         difficulty=case.difficulty,
         notes=case.notes,

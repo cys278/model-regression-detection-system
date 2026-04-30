@@ -84,7 +84,7 @@ This dataset serves as the **source of truth for evaluation**.
 
 ## Phase 3 — Evaluation Engine ✅
 
-The evaluation system introduces automated testing, scoring, and regression detection.
+The evaluation system introduces automated testing, multi-metric scoring, and regression detection.
 
 ### Evaluation Runner
 
@@ -93,15 +93,27 @@ The evaluation system introduces automated testing, scoring, and regression dete
 - Measures latency per request
 - Handles model failures gracefully (e.g., invalid JSON)
 
+---
+
 ### Metrics
 
-Currently implemented:
+Implemented:
+
 - **Category Accuracy (primary metric)**
   - Exact match against expected label
 
-Planned (next iteration):
-- Summary quality scoring (LLM-as-judge)
-- Token usage tracking
+- **Summary Quality (LLM-as-judge)**
+  - Scores summaries from 1–5 based on semantic correctness
+  - Uses a secondary LLM with strict evaluation prompts
+  - Includes robust parsing to handle non-deterministic outputs
+
+- **Combined Quality Score**
+  - Weighted metric combining classification and summary quality:
+    - 70% category correctness
+    - 30% summary quality
+  - Produces a single interpretable performance score
+
+---
 
 ### Run Storage
 
@@ -116,6 +128,8 @@ Planned (next iteration):
 - Runs are **not committed to Git** (ignored via `.gitignore`)
 - Ensures reproducibility without polluting repository history
 
+---
+
 ### Regression Detection
 
 Each run is compared against the previous run:
@@ -127,11 +141,15 @@ Each run is compared against the previous run:
 - Computes:
   - accuracy delta
 
+---
+
 ### Threshold-Based Status
 
-- `pass` → no significant change
-- `warning` → >3% accuracy drop
-- `critical` → >8% accuracy drop
+- `pass` → no significant change  
+- `warning` → >3% accuracy drop  
+- `critical` → >8% accuracy drop  
+
+---
 
 ### Debugging Visibility
 
@@ -151,6 +169,8 @@ This enables fast diagnosis of:
 
 ```text
 Category accuracy: 81.03%
+Average summary score: 3.60/5
+Overall quality score: 0.78
 
 Failed cases:
 --------------------------------------------------------------------------------
