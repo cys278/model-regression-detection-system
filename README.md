@@ -162,42 +162,19 @@ Expected summary: ...
 Predicted summary: ...
 ```
 
+## Current Status
 
+- Phase 1 — Feature Implementation ✅  
+- Phase 2 — Golden Dataset ✅  
+- Phase 3 — Evaluation Engine ✅  
+- Phase 4 — Reporting & Alerting 🚧  
+- Phase 5 — CI/CD Integration 🚧  
 
-Project Structure
+---
 
+## Next Steps (Phase 4)
 
-model-regression-detection-system/
-├── prompts/
-│   └── classifier_v1.yaml
-├── data/
-│   └── golden_dataset_v1.json
-├── runs/                  # eval outputs (ignored in Git)
-├── src/
-│   ├── classifier.py
-│   ├── prompt_loader.py
-│   ├── evaluator.py
-│   ├── eval_runner.py
-│   ├── eval_storage.py
-│   ├── eval_compare.py
-│   └── eval_schemas.py
-├── reports/              # (Phase 4)
-├── tests/
-├── .env
-├── .gitignore
-├── requirements.txt
-└── README.md
-
-
-Current Status
-Phase 1 — Feature Implementation ✅
-Phase 2 — Golden Dataset ✅
-Phase 3 — Evaluation Engine ✅
-Phase 4 — Reporting & Alerting 🚧
-Phase 5 — CI/CD Integration 🚧
-
-Next Steps (Phase 4)
-HTML evaluation reports with diff views
-Slack alert integration (webhooks)
-Trend tracking across runs
-Drift detection (rolling averages)
+- HTML evaluation reports with diff views  
+- Slack alert integration (webhooks)  
+- Trend tracking across runs  
+- Drift detection (rolling averages)  
