@@ -1,3 +1,31 @@
+name: LLM Evaluation Pipeline
+
+on:
+  pull_request:
+    paths:
+      - "prompts/**"
+  push:
+    paths:
+      - "prompts/**"
+      - ".github/workflows/eval.yml"
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
       - name: Run evaluation
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
@@ -16,28 +44,25 @@
 
       - name: Fail on critical regression
         run: |
-          python - <<EOF
-          import json, glob
+          python - <<'EOF'
+          import json
+          import glob
 
-          runs = sorted(glob.glob('runs/*.json'))
+          runs = sorted(glob.glob("runs/*.json"))
+
+          if len(runs) < 2:
+              print("Not enough runs to compare. Passing.")
+              raise SystemExit(0)
+
           current = json.load(open(runs[-1]))
-          previous = json.load(open(runs[-2])) if len(runs) > 1 else None
+          previous = json.load(open(runs[-2]))
 
-          def get_status(prev, curr):
-              if not prev:
-                  return "pass"
-              delta = curr["category_accuracy"] - prev["category_accuracy"]
-              if delta <= -0.08:
-                  return "critical"
-              elif delta <= -0.03:
-                  return "warning"
-              return "pass"
+          delta = current["category_accuracy"] - previous["category_accuracy"]
 
-          status = get_status(previous, current)
-          print("STATUS:", status)
-
-          if status == "critical":
+          if delta <= -0.08:
               raise Exception("Critical regression detected")
+
+          print("No critical regression detected.")
           EOF
 
       - name: Upload report artifact
