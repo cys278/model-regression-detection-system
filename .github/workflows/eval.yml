@@ -1,16 +1,20 @@
       - name: Run evaluation
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          PYTHONPATH: .
         run: |
           python src/eval_runner.py
 
       - name: Generate report
+        env:
+          PYTHONPATH: .
         run: |
           python generate_report.py
 
       - name: Send Slack alert
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PYTHONPATH: .
         run: |
           python send_alert.py
 
@@ -20,12 +24,15 @@
           import json, glob
 
           runs = sorted(glob.glob('runs/*.json'))
+
+          if len(runs) < 2:
+              print("Not enough runs to compare. Passing.")
+              raise SystemExit(0)
+
           current = json.load(open(runs[-1]))
-          previous = json.load(open(runs[-2])) if len(runs) > 1 else None
+          previous = json.load(open(runs[-2]))
 
           def get_status(prev, curr):
-              if not prev:
-                  return "pass"
               delta = curr["category_accuracy"] - prev["category_accuracy"]
               if delta <= -0.08:
                   return "critical"
