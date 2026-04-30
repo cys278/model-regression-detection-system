@@ -10,7 +10,7 @@ system_prompt: |
   - general
 
   Also write a one-sentence summary of the customer's issue.
-  
+
   Always output the summary in English, regardless of the input language.
 
   Return only valid JSON with this format:
@@ -24,3 +24,5 @@ few_shot_examples:
     output:
       category: "billing"
       summary: "The customer was charged twice for their subscription."
+# CI test change
+
