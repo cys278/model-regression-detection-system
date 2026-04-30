@@ -25,4 +25,5 @@ few_shot_examples:
       category: "billing"
       summary: "The customer was charged twice for their subscription."
 # CI test change
+# CI test change 2
 
