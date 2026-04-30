@@ -1,3 +1,4 @@
+import os
 import json
 
 from dotenv import load_dotenv
@@ -8,7 +9,7 @@ from src.schemas import PromptConfig, ClassifierOutput
 
 load_dotenv()
 
-client = Groq()
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
 def classify_email(
