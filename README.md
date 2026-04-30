@@ -1,6 +1,6 @@
 # Model Regression Detection System
 
-This project implements a CI/CD-style evaluation pipeline for LLM-powered features. It automatically tests prompt or model changes against a curated golden dataset, detects quality regressions, and generates reports before degraded outputs reach users.
+This project implements a CI/CD-style evaluation pipeline for LLM-powered features. It automatically tests prompt or model changes against a curated golden dataset, detects quality regressions, and generates structured evaluation outputs before degraded behavior reaches users.
 
 ---
 
@@ -19,63 +19,182 @@ This project implements a CI/CD-style evaluation pipeline for LLM-powered featur
 
 ## Project Goal
 
-Modern teams ship prompt and model changes without rigorous testing. This project introduces:
+Modern teams often ship prompt or model changes without systematic validation. This project introduces:
 
-- Repeatable evaluation of LLM outputs
-- Regression detection across prompt/model changes
-- Structured reporting for decision-making
-- CI/CD integration for automated quality checks
+- Deterministic evaluation of LLM behavior
+- Regression detection across runs
+- Per-case debugging visibility
+- Reproducible evaluation artifacts
+- CI/CD-ready testing workflow
 
 ---
 
 ## Phase 1 — Feature Implementation ✅
 
 Completed:
-- Project structure and modular design
+- Modular project structure
 - Versioned prompt configuration (`/prompts`)
-- Typed schemas using Pydantic
+- Strict typing using Pydantic schemas
 - YAML-based prompt loader
-- LLM-powered classifier (Groq API)
-- Manual execution script for testing
+- LLM classifier using Groq API
+- Manual execution script (`run_manual.py`)
 
-The classifier successfully returns structured JSON outputs for real-world email inputs.
+Key decisions:
+- Prompt is versioned → enables reproducibility
+- Output is strict JSON → enables automated evaluation
+- Summary rules enforced:
+  - one sentence
+  - factual
+  - English only
 
 ---
 
 ## Phase 2 — Golden Dataset ✅
 
 Completed:
-- Curated **58 human-written test cases**
-- Balanced coverage across all categories
-- Inclusion of real-world edge cases:
-  - Ambiguous and multi-intent inputs
-  - Short and noisy inputs
-  - Typographical errors
-  - Sarcasm and tone normalization
-  - Mixed-language inputs
-  - Prompt injection attempts
+- **58 human-written test cases**
+- Balanced category distribution
+- Extensive real-world edge case coverage:
+  - ambiguous and multi-intent inputs
+  - short/noisy inputs
+  - typos and informal language
+  - sarcasm normalization
+  - mixed-language inputs
+  - prompt injection attempts
   - PII exposure scenarios
-  - Long-context inputs
-  - HTML/system artifact inputs
-- Difficulty labeling (`easy`, `medium`, `hard`) for evaluation slicing
-- Consistent, evaluation-friendly summaries:
-  - English-only output
-  - No tone descriptors
-  - Standardized phrasing
+  - long-context inputs
+  - HTML/system noise
 
-This dataset serves as a **golden benchmark** for regression detection.
+Dataset design:
+- Each case includes:
+  - expected category
+  - expected summary
+  - difficulty (`easy`, `medium`, `hard`)
+  - notes explaining intent
+
+Summary constraints:
+- one sentence
+- factual and neutral
+- no tone descriptors
+- consistent phrasing
+
+This dataset serves as the **source of truth for evaluation**.
 
 ---
 
-## Next — Phase 3: Evaluation Engine 🚧
+## Phase 3 — Evaluation Engine ✅
 
-Planned:
-- Automated test runner for dataset execution
-- Multi-dimensional scoring:
-  - Category accuracy
-  - Summary quality (LLM-as-judge)
-  - Latency
-  - Token usage
-- Output comparison against baseline runs
-- Regression and improvement detection
-- Structured evaluation reports
+The evaluation system introduces automated testing, scoring, and regression detection.
+
+### Evaluation Runner
+
+- Executes all dataset cases against the classifier
+- Collects structured outputs per test case
+- Measures latency per request
+- Handles model failures gracefully (e.g., invalid JSON)
+
+### Metrics
+
+Currently implemented:
+- **Category Accuracy (primary metric)**
+  - Exact match against expected label
+
+Planned (next iteration):
+- Summary quality scoring (LLM-as-judge)
+- Token usage tracking
+
+### Run Storage
+
+- Each evaluation run is saved as a versioned JSON artifact:
+  - stored in `/runs`
+  - includes metadata:
+    - timestamp
+    - prompt version
+    - model
+    - per-case results
+
+- Runs are **not committed to Git** (ignored via `.gitignore`)
+- Ensures reproducibility without polluting repository history
+
+### Regression Detection
+
+Each run is compared against the previous run:
+
+- Detects:
+  - regressions (pass → fail)
+  - improvements (fail → pass)
+
+- Computes:
+  - accuracy delta
+
+### Threshold-Based Status
+
+- `pass` → no significant change
+- `warning` → >3% accuracy drop
+- `critical` → >8% accuracy drop
+
+### Debugging Visibility
+
+- Prints all failed cases with:
+  - input text
+  - expected vs predicted category
+  - expected vs predicted summary
+
+This enables fast diagnosis of:
+- prompt weaknesses
+- model inconsistencies
+- dataset edge cases
+
+---
+
+## Example Output
+
+```text
+Category accuracy: 81.03%
+
+Failed cases:
+--------------------------------------------------------------------------------
+Case ID: case_005
+Input: ...
+Expected category: account
+Predicted category: billing
+Expected summary: ...
+Predicted summary: ...
+
+## Project Structure
+
+
+model-regression-detection-system/
+├── prompts/
+│   └── classifier_v1.yaml
+├── data/
+│   └── golden_dataset_v1.json
+├── runs/                  # eval outputs (ignored in Git)
+├── src/
+│   ├── classifier.py
+│   ├── prompt_loader.py
+│   ├── evaluator.py
+│   ├── eval_runner.py
+│   ├── eval_storage.py
+│   ├── eval_compare.py
+│   └── eval_schemas.py
+├── reports/              # (Phase 4)
+├── tests/
+├── .env
+├── .gitignore
+├── requirements.txt
+└── README.md
+
+
+Current Status
+Phase 1 — Feature Implementation ✅
+Phase 2 — Golden Dataset ✅
+Phase 3 — Evaluation Engine ✅
+Phase 4 — Reporting & Alerting 🚧
+Phase 5 — CI/CD Integration 🚧
+
+Next Steps (Phase 4)
+HTML evaluation reports with diff views
+Slack alert integration (webhooks)
+Trend tracking across runs
+Drift detection (rolling averages)

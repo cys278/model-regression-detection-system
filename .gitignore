@@ -12,7 +12,7 @@ venv/
 # Environment variables
 .env
 
-# MacOS
+# MacOS 
 .DS_Store
 
 # Eval outputs (VERY IMPORTANT)
